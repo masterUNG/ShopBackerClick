@@ -22,9 +22,7 @@ class _SearchState extends State<Search> {
   Widget searchForm() {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.black26,
-        borderRadius: BorderRadius.circular(12.0)
-      ),
+          color: Colors.black26, borderRadius: BorderRadius.circular(12.0)),
       height: 40.0,
       child: TextField(
         decoration: InputDecoration(
@@ -62,7 +60,6 @@ class _SearchState extends State<Search> {
       appBar: AppBar(
         title: searchForm(),
         leading: backButton(),
-        backgroundColor: MyStyle().primaryColor,
       ),
     );
   }

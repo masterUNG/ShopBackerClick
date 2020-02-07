@@ -20,21 +20,30 @@ class _HomeState extends State<Home> {
   // Method
   BottomNavigationBarItem homeNav() {
     return BottomNavigationBarItem(
-      icon: Icon(Icons.home, size: MyStyle().myIconSize,),
+      icon: Icon(
+        Icons.home,
+        size: MyStyle().myIconSize,
+      ),
       title: Text('หน้าหลัก'),
     );
   }
 
   BottomNavigationBarItem braketNav() {
     return BottomNavigationBarItem(
-      icon: Icon(Icons.add_shopping_cart, size: MyStyle().myIconSize,),
+      icon: Icon(
+        Icons.add_shopping_cart,
+        size: MyStyle().myIconSize,
+      ),
       title: Text('ตะกร้า'),
     );
   }
 
   BottomNavigationBarItem accountNav() {
     return BottomNavigationBarItem(
-      icon: Icon(Icons.account_box, size: MyStyle().myIconSize,),
+      icon: Icon(
+        Icons.account_box,
+        size: MyStyle().myIconSize,
+      ),
       title: Text('บัญชี'),
     );
   }
@@ -60,10 +69,14 @@ class _HomeState extends State<Home> {
       tooltip: 'ค้นหา สินค้า',
       icon: Icon(
         Icons.search,
-        color: Colors.white,size: MyStyle().myIconSize,
+        color: Colors.white,
+        size: MyStyle().myIconSize,
       ),
       onPressed: () {
-        MaterialPageRoute materialPageRoute = MaterialPageRoute(builder: (BuildContext buildContext){return Search();});
+        MaterialPageRoute materialPageRoute =
+            MaterialPageRoute(builder: (BuildContext buildContext) {
+          return Search();
+        });
         Navigator.of(context).push(materialPageRoute);
       },
     );
@@ -74,7 +87,6 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[searchButton()],
-        backgroundColor: MyStyle().primaryColor,
         title: Text(
           MyConstant().appName,
           style: TextStyle(color: Colors.white),
