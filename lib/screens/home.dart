@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopbackerclick/screens/search.dart';
 import 'package:shopbackerclick/utility/my_constant.dart';
 import 'package:shopbackerclick/utility/my_style.dart';
 import 'package:shopbackerclick/widget/account.dart';
@@ -61,7 +62,10 @@ class _HomeState extends State<Home> {
         Icons.search,
         color: Colors.white,size: MyStyle().myIconSize,
       ),
-      onPressed: () {},
+      onPressed: () {
+        MaterialPageRoute materialPageRoute = MaterialPageRoute(builder: (BuildContext buildContext){return Search();});
+        Navigator.of(context).push(materialPageRoute);
+      },
     );
   }
 
