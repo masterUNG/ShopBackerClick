@@ -75,7 +75,7 @@ class _HomeState extends State<Home> {
       onPressed: () {
         MaterialPageRoute materialPageRoute =
             MaterialPageRoute(builder: (BuildContext buildContext) {
-          return Search();
+          return Search(index: 0,);
         });
         Navigator.of(context).push(materialPageRoute);
       },

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "924871390697",
+    "firebase_url": "https://shopbackerclick2020.firebaseio.com",
+    "project_id": "shopbackerclick2020",
+    "storage_bucket": "shopbackerclick2020.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:924871390697:android:43514957804ee972d1c778",
+        "android_client_info": {
+          "package_name": "com.flutterthailand.shopbackerclick"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "924871390697-pvjm5oddubi9g082rbv2j4frjreli75t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzWscCpmyV01avBgdThMvnPPoRMKOSr4M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "924871390697-pvjm5oddubi9g082rbv2j4frjreli75t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

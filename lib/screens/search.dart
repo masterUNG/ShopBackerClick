@@ -1,15 +1,45 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:shopbackerclick/utility/my_constant.dart';
 import 'package:shopbackerclick/utility/my_style.dart';
 
 class Search extends StatefulWidget {
+  final int index;
+  Search({Key key, this.index}) : super(key: key);
+
   @override
   _SearchState createState() => _SearchState();
 }
 
 class _SearchState extends State<Search> {
   // Field
+  int index;
 
   // Method
+  @override
+  void initState(){
+    super.initState();
+    index = widget.index;
+    print('index = $index');
+    readData();
+  }
+
+  Future<void> readData()async{
+
+    try {
+
+      List<String> urls = MyConstant().apiReadProduct;
+      Response response = await Dio().get(urls[index]);
+      print('response = $response');
+
+      
+    } catch (e) {
+      print('eReadData ==>> ${e.toString()}');
+    }
+
+  }
+
+
   Widget cancelButton() {
     return FlatButton(
       onPressed: () {
