@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:shopbackerclick/models/product_model.dart';
 import 'package:shopbackerclick/utility/my_constant.dart';
 import 'package:shopbackerclick/utility/my_style.dart';
 
@@ -14,31 +17,37 @@ class Search extends StatefulWidget {
 class _SearchState extends State<Search> {
   // Field
   int index;
+  List<ProductModel> productModels = List();
 
   // Method
   @override
-  void initState(){
+  void initState() {
     super.initState();
     index = widget.index;
     print('index = $index');
     readData();
   }
 
-  Future<void> readData()async{
-
+  Future<void> readData() async {
     try {
-
       List<String> urls = MyConstant().apiReadProduct;
       Response response = await Dio().get(urls[index]);
       print('response = $response');
 
       
+
+      for (var json in response.data) {
+        print('json = $json');
+        ProductModel productModel = ProductModel.fromJson(json);
+        print('priductModel = $productModel');
+        setState(() {
+          productModels.add(productModel);
+        });
+      }
     } catch (e) {
       print('eReadData ==>> ${e.toString()}');
     }
-
   }
-
 
   Widget cancelButton() {
     return FlatButton(
@@ -84,6 +93,20 @@ class _SearchState extends State<Search> {
     );
   }
 
+  Widget showProcess() {
+    return Center(
+      child: CircularProgressIndicator(),
+    );
+  }
+
+  Widget showListView() {
+    return ListView.builder(
+        itemCount: productModels.length,
+        itemBuilder: (BuildContext buildContext, int index) {
+          return Text(productModels[index].name);
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,6 +114,7 @@ class _SearchState extends State<Search> {
         title: searchForm(),
         leading: backButton(),
       ),
+      body: productModels.length == 0 ? showProcess() : showListView(),
     );
   }
 }
