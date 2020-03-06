@@ -19,6 +19,7 @@ class _SearchState extends State<Search> {
   // Field
   int index;
   List<ProductModel> productModels = List();
+  List<Widget> widgets = List();
 
   // Method
   @override
@@ -33,19 +34,49 @@ class _SearchState extends State<Search> {
     try {
       List<String> urls = MyConstant().apiReadProduct;
       Response response = await Dio().get(urls[index]);
-      print('response = $response');
+      // print('response = $response');
+
+      int indexGridView = 0;
 
       for (var json in response.data) {
-        print('json = $json');
+        // print('json = $json');
         ProductModel productModel = ProductModel.fromJson(json);
-        print('priductModel = $productModel');
+        // print('priductModel = $productModel');
+
         setState(() {
           productModels.add(productModel);
+          Widget widget = createCard(productModel, indexGridView);
+          widgets.add(widget);
         });
+        indexGridView++;
       }
     } catch (e) {
       print('eReadData ==>> ${e.toString()}');
     }
+  }
+
+  Widget createCard(ProductModel productModel, int index) {
+    return Card(
+          child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          showImage(index),
+          showTextGritView(productModel),
+        ],
+      ),
+    );
+  }
+
+  Widget showTextGritView(ProductModel productModel) {
+
+    String string = productModel.name;
+    int amount = 20;
+
+    if (string.length > amount) {
+      string = string.substring(0, amount-1);
+      string = '$string ...';
+    }
+
+    return Text(string);
   }
 
   Widget cancelButton() {
@@ -104,12 +135,12 @@ class _SearchState extends State<Search> {
     if (image != null) {
       Uint8List uint8list = base64Decode(productModels[index].pic);
       return Container(
-        height: 150.0,
+        height: 50.0,
         child: Image.memory(uint8list),
       );
     } else {
       return Container(
-        height: 150.0,
+        height: 50.0,
         child: Image.asset('images/question.png'),
       );
     }
@@ -136,6 +167,16 @@ class _SearchState extends State<Search> {
         });
   }
 
+  Widget showGritView() {
+    return Container(padding: EdgeInsets.all(10.0),
+      child: GridView.extent(crossAxisSpacing: 10.0,
+        mainAxisSpacing: 10.0,
+        maxCrossAxisExtent: 150.0,
+        children: widgets,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -143,7 +184,7 @@ class _SearchState extends State<Search> {
         title: searchForm(),
         leading: backButton(),
       ),
-      body: productModels.length == 0 ? showProcess() : showListView(),
+      body: productModels.length == 0 ? showProcess() : showGritView(),
     );
   }
 }
