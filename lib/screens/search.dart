@@ -9,7 +9,8 @@ import 'package:shopbackerclick/utility/my_style.dart';
 
 class Search extends StatefulWidget {
   final int index;
-  Search({Key key, this.index}) : super(key: key);
+  final String searchString;
+  Search({Key key, this.index, this.searchString}) : super(key: key);
 
   @override
   _SearchState createState() => _SearchState();
@@ -20,19 +21,27 @@ class _SearchState extends State<Search> {
   int index;
   List<ProductModel> productModels = List();
   List<Widget> widgets = List();
+  String search;
 
   // Method
   @override
   void initState() {
     super.initState();
     index = widget.index;
-    print('index = $index');
+    search = widget.searchString;
+    // print('index = $index');
     readData();
   }
 
   Future<void> readData() async {
     try {
       List<String> urls = MyConstant().apiReadProduct;
+
+      if (index == 0) {
+        urls[0] = '${urls[0]}$search ';
+        print('url ===>>> ${urls[0]}');
+      }
+
       Response response = await Dio().get(urls[index]);
       // print('response = $response');
 
@@ -89,11 +98,14 @@ class _SearchState extends State<Search> {
   }
 
   Widget searchForm() {
+    if (search == null) {
+      search = '';
+    }
     return Container(
       decoration: BoxDecoration(
           color: Colors.black26, borderRadius: BorderRadius.circular(12.0)),
       height: 40.0,
-      child: TextField(
+      child: TextFormField(initialValue: search,
         decoration: InputDecoration(
           border: InputBorder.none,
           suffixIcon: Icon(

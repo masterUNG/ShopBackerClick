@@ -14,8 +14,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   // Field
   List<Widget> showWidgets = [MainPage(), Braket(), Account()];
-
   int index = 0;
+  String searchString;
 
   // Method
   BottomNavigationBarItem homeNav() {
@@ -64,7 +64,27 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget searchButton() {
+  Widget searchForm() {
+    return Container(
+      decoration: BoxDecoration(
+          color: Colors.black26, borderRadius: BorderRadius.circular(12.0)),
+      height: 50.0,
+      child: TextField(
+        onChanged: (value) => searchString = value.trim(),
+        style: TextStyle(color: Colors.white),
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.only(
+            left: 16.0,
+          ),
+          border: InputBorder.none,
+          hintStyle: TextStyle(color: MyStyle().white1),
+          hintText: 'ค้นหา สินค้า',
+        ),
+      ),
+    );
+  }
+
+  IconButton searchIconButton() {
     return IconButton(
       tooltip: 'ค้นหา สินค้า',
       icon: Icon(
@@ -73,24 +93,37 @@ class _HomeState extends State<Home> {
         size: MyStyle().myIconSize,
       ),
       onPressed: () {
-        MaterialPageRoute materialPageRoute =
-            MaterialPageRoute(builder: (BuildContext buildContext) {
-          return Search(index: 0,);
-        });
-        Navigator.of(context).push(materialPageRoute);
+        if (searchString == null || searchString.isEmpty) {
+          print('Have Space');
+        } else {
+          routeToSearch();
+        }
       },
     );
+  }
+
+  void routeToSearch() {
+    MaterialPageRoute materialPageRoute =
+        MaterialPageRoute(builder: (BuildContext buildContext) {
+      return Search(
+        searchString: searchString,
+        index: 0,
+      );
+    });
+    Navigator.of(context).push(materialPageRoute);
+  }
+
+  Widget myDrawer() {
+    return Drawer();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: myDrawer(),
       appBar: AppBar(
-        actions: <Widget>[searchButton()],
-        title: Text(
-          MyConstant().appName,
-          style: TextStyle(color: Colors.white),
-        ),
+        title: searchForm(),
+        actions: <Widget>[searchIconButton()],
       ),
       body: showWidgets[index],
       bottomNavigationBar: myButtonNavBar(),
