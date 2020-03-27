@@ -68,14 +68,11 @@ class _HomeState extends State<Home> {
     return Container(
       decoration: BoxDecoration(
           color: Colors.black26, borderRadius: BorderRadius.circular(12.0)),
-      height: 50.0,
+      height: 40.0,
       child: TextField(
         onChanged: (value) => searchString = value.trim(),
         style: TextStyle(color: Colors.white),
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.only(
-            left: 16.0,
-          ),
+        decoration: InputDecoration(prefix: SizedBox(width: 16.0,),
           border: InputBorder.none,
           hintStyle: TextStyle(color: MyStyle().white1),
           hintText: 'ค้นหา สินค้า',
@@ -90,7 +87,7 @@ class _HomeState extends State<Home> {
       icon: Icon(
         Icons.search,
         color: Colors.white,
-        size: MyStyle().myIconSize,
+        // size: MyStyle().myIconSize,
       ),
       onPressed: () {
         if (searchString == null || searchString.isEmpty) {
