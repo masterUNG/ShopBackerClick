@@ -37,10 +37,6 @@ class _SearchState extends State<Search> {
 
   Future<void> readData() async {
     try {
-      if (productModels.length != 0) {
-        productModels.removeWhere((value) => value != null);
-      }
-
       List<String> urls = MyConstant().apiReadProduct;
 
       if (index == 0) {
@@ -49,7 +45,7 @@ class _SearchState extends State<Search> {
       }
 
       Response response = await Dio().get(urls[index]);
-      // print('response = $response');
+      print('response = $response');
 
       int indexGridView = 0;
 
@@ -64,6 +60,7 @@ class _SearchState extends State<Search> {
           widgets.add(widget);
         });
         indexGridView++;
+        print('index ====> $indexGridView');
       }
     } catch (e) {
       print('eReadData ==>> ${e.toString()}');
@@ -107,7 +104,11 @@ class _SearchState extends State<Search> {
     return IconButton(
       icon: Icon(Icons.search),
       onPressed: () {
-        print('search ===>>> $search');
+        if (productModels.length != 0) {
+          productModels
+              .removeWhere((ProductModel productModel) => productModel != null);
+          widgets.removeWhere((Widget widget) => widget != null);
+        }
         setState(() {
           readData();
         });
@@ -184,26 +185,7 @@ class _SearchState extends State<Search> {
     }
   }
 
-  Widget showListView() {
-    return ListView.builder(
-        itemCount: productModels.length,
-        itemBuilder: (BuildContext buildContext, int index) {
-          return Container(
-            padding: EdgeInsets.only(left: 50.0, right: 50.0),
-            child: Card(
-              child: Column(
-                children: <Widget>[
-                  showImage(index),
-                  Text(
-                    productModels[index].name,
-                    style: MyStyle().titleH3,
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
-  }
+  
 
   Widget showGritView() {
     return Container(
