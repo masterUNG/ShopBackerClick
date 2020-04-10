@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shopbackerclick/models/product_model.dart';
+import 'package:shopbackerclick/screens/detail_product.dart';
 import 'package:shopbackerclick/utility/my_constant.dart';
 import 'package:shopbackerclick/utility/my_style.dart';
 import 'package:shopbackerclick/utility/normal_dialog.dart';
@@ -40,7 +41,7 @@ class _SearchState extends State<Search> {
       List<String> urls = MyConstant().apiReadProduct;
 
       if (index == 0) {
-        urls[0] = '${urls[0]}$search ';
+        urls[0] = '${urls[0]}$search&start=1&end=12';
         print('url ===>>> ${urls[0]}');
       }
 
@@ -68,13 +69,23 @@ class _SearchState extends State<Search> {
   }
 
   Widget createCard(ProductModel productModel, int index) {
-    return Card(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          showImage(index),
-          showTextGritView(productModel),
-        ],
+    return GestureDetector(
+      onTap: () {
+        print('You Click index $index');
+        MaterialPageRoute route =
+            MaterialPageRoute(builder: (BuildContext context) {
+          return DetailProduct(productModel: productModels[index],);
+        });
+        Navigator.of(context).push(route);
+      },
+      child: Card(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            showImage(index),
+            showTextGritView(productModel),
+          ],
+        ),
       ),
     );
   }
@@ -184,8 +195,6 @@ class _SearchState extends State<Search> {
       );
     }
   }
-
-  
 
   Widget showGritView() {
     return Container(
